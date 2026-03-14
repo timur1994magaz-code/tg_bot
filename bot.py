@@ -25,7 +25,8 @@ SCOPES = [
 ]
 
 def get_sheet():
-    creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+     creds_dict = json.loads(os.environ.get("GOOGLE_CREDENTIALS_JSON"))
+   creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     client = gspread.authorize(creds)
     return client.open_by_key(SPREADSHEET_ID).sheet1
 
