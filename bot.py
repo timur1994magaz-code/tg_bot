@@ -200,14 +200,12 @@ async def get_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
         label,
     ]
 
-  try:
+    try:
         sheet = get_sheet()
         sheet.append_row(row)
         logger.info(f"Новая запись: {ud.get('tg_username')}")
     except Exception as e:
-        import traceback
         logger.error(f"Ошибка записи в таблицу: {e}")
-        logger.error(traceback.format_exc())
 
     if NOTIFY_CHAT_ID:
         try:
