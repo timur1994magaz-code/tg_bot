@@ -28,10 +28,14 @@ SCOPES = [
 
 def get_sheet():
     creds_json = os.environ.get("GOOGLE_CREDENTIALS_JSON", "")
+    logger.info(f"CREDENTIALS длина: {len(creds_json)}")
+    logger.info(f"SPREADSHEET_ID: {SPREADSHEET_ID}")
     creds_dict = json.loads(creds_json)
     creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     client = gspread.authorize(creds)
-    return client.open_by_key(SPREADSHEET_ID).sheet1
+    sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+    logger.info(f"Таблица открыта: {sheet.title}")
+    return sheet
 
 
 Q1, Q2, Q3, Q4, Q5, GET_PHONE, GET_EMAIL = range(7)
